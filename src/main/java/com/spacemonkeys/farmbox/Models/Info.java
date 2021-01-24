@@ -33,7 +33,12 @@ public class Info {
                 Float humidity,
                 Boolean light,
                 String ph,
-                String conductivity1,
                 String nutrients) {
+    this.conductivity = conductivity;
+    this.water = water;
+    this.humidity = humidity;
+    this.light = light;
+    this.ph = ph;
+    this.nutrients = nutrients;
     }
 }

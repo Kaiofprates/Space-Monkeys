@@ -29,7 +29,8 @@ public class InfoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Info create(@RequestBody @Valid InfoDTO dto){
+    public Info create(@RequestBody InfoDTO dto){
+        System.out.println(dto.getNutrients());
         return this.infoService.save(dto.toInfo());
     }
 
