@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import java.util.Date;
 
 @SpringBootTest
@@ -40,6 +40,12 @@ public class InfoTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(dtoTest))
         ).andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(jsonPath("$.conductivity").value(dtoTest.getConductivity()))
+                .andExpect(jsonPath("$.water").value(dtoTest.getWater()))
+                .andExpect(jsonPath("$.light").value(dtoTest.getLight()))
+                .andExpect(jsonPath("$.ph").value(dtoTest.getPh()))
+                .andExpect(jsonPath("$.nutrients").value(dtoTest.getNutrients()))
+                .andExpect(jsonPath("$.humidity").value(dtoTest.getHumidity()))
                 .andDo(MockMvcResultHandlers.print());
     }
 }

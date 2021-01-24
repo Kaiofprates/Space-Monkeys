@@ -40,5 +40,6 @@ public class Info {
     this.light = light;
     this.ph = ph;
     this.nutrients = nutrients;
+    this.id = getId();
     }
 }

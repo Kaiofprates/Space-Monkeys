@@ -2,7 +2,7 @@ FROM openjdk
 
 WORKDIR /app
 
-COPY out/artifacts/farmbox_jar/farmbox.jar /app/farmbox.jar
+COPY target/farmbox-0.0.1-SNAPSHOT.jar /app/farmbox.jar
 
 ENTRYPOINT ["java","-jar", "farmbox.jar"]
 
