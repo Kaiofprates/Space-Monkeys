@@ -1,8 +1,6 @@
 package com.spacemonkeys.farmbox.Models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -11,6 +9,8 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Getter
+@Setter
 @Entity
 @Table
 
@@ -20,19 +20,25 @@ public class Plant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     private String type;
 
-    @NotBlank
     private Long age;
 
     @DateTimeFormat
     private String cicle;
 
-    @OneToOne
-    private Users user;
+    @Column(name= "user_id")
+    private Long user;
 
     @OneToOne
+    @JoinColumn(name = "id")
     private Info info;
 
+    public Plant(@NotBlank String type, @NotBlank Long age, String cicle, Long user) {
+        this.type = type;
+        this.age = age;
+        this.cicle = cicle;
+        this.user = user;
+        this.id = getId();
+    }
 }

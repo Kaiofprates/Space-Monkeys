@@ -39,7 +39,8 @@ public class InfoDTO {
                 this.humidity,
                 this.light,
                 this.ph,
-                this.nutrients);
+                this.nutrients
+                );
         return info;
     }
 }

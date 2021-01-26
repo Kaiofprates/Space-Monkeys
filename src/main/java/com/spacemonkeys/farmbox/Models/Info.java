@@ -25,21 +25,17 @@ public class Info {
     private String conductivity;
     private String nutrients;
 
+
     @DateTimeFormat
     private String time;
 
-    public Info(String conductivity,
-                Float water,
-                Float humidity,
-                Boolean light,
-                String ph,
-                String nutrients) {
-    this.conductivity = conductivity;
-    this.water = water;
-    this.humidity = humidity;
-    this.light = light;
-    this.ph = ph;
-    this.nutrients = nutrients;
-    this.id = getId();
+    public Info(String conductivity, Float water, Float humidity, Boolean light, String ph, String nutrients) {
+        this.conductivity = conductivity;
+        this.water = water;
+        this.humidity = humidity;
+        this.light = light;
+        this.ph = ph;
+        this.nutrients = nutrients;
+        this.id = getId();
     }
 }

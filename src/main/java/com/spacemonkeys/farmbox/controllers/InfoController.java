@@ -2,13 +2,11 @@ package com.spacemonkeys.farmbox.controllers;
 
 import com.spacemonkeys.farmbox.Models.Info;
 import com.spacemonkeys.farmbox.dto.InfoDTO;
-import com.spacemonkeys.farmbox.services.InfoService;
+import com.spacemonkeys.farmbox.services.infoservice.InfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,7 +28,6 @@ public class InfoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Info create(@RequestBody InfoDTO dto){
-        System.out.println(dto.getNutrients());
         return this.infoService.save(dto.toInfo());
     }
 

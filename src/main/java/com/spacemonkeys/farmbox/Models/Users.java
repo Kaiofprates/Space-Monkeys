@@ -17,6 +17,7 @@ import java.util.List;
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     @NotBlank
@@ -25,9 +26,16 @@ public class Users {
     @NotBlank
     private String password;
 
+
     @OneToMany
-    @JoinColumn(columnDefinition = "id")
+    @JoinColumn(name = "user_id")
     private List<Plant> plants;
 
 
+    public Users(@NotBlank String name, @NotBlank String password, List<Plant> plants) {
+        this.name = name;
+        this.password = password;
+        this.plants = plants;
+        this.id = getId();
+    }
 }
