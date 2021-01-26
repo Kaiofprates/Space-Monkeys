@@ -48,4 +48,6 @@ public class InfoTest {
                 .andExpect(jsonPath("$.humidity").value(dtoTest.getHumidity()))
                 .andDo(MockMvcResultHandlers.print());
     }
+
+
 }

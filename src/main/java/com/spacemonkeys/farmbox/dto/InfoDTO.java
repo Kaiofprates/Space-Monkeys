@@ -1,6 +1,7 @@
 package com.spacemonkeys.farmbox.dto;
 
 import com.spacemonkeys.farmbox.Models.Info;
+import com.sun.istack.NotNull;
 import jdk.jfr.BooleanFlag;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,9 +16,10 @@ import javax.validation.constraints.NotBlank;
 
 public class InfoDTO {
 
-    @NotBlank
+    @NotNull
     public Float water;
-    @NotBlank
+
+    @NotNull
     public Float humidity;
 
     @BooleanFlag
@@ -42,5 +44,53 @@ public class InfoDTO {
                 this.nutrients
                 );
         return info;
+    }
+
+    public Float getWater() {
+        return water;
+    }
+
+    public void setWater(Float water) {
+        this.water = water;
+    }
+
+    public Float getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(Float humidity) {
+        this.humidity = humidity;
+    }
+
+    public Boolean getLight() {
+        return light;
+    }
+
+    public void setLight(Boolean light) {
+        this.light = light;
+    }
+
+    public String getPh() {
+        return ph;
+    }
+
+    public void setPh(String ph) {
+        this.ph = ph;
+    }
+
+    public String getConductivity() {
+        return conductivity;
+    }
+
+    public void setConductivity(String conductivity) {
+        this.conductivity = conductivity;
+    }
+
+    public String getNutrients() {
+        return nutrients;
+    }
+
+    public void setNutrients(String nutrients) {
+        this.nutrients = nutrients;
     }
 }
