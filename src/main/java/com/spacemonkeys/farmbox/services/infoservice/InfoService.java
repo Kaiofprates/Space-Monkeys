@@ -1,4 +1,4 @@
-package com.spacemonkeys.farmbox.services;
+package com.spacemonkeys.farmbox.services.infoservice;
 
 import com.spacemonkeys.farmbox.Models.Info;
 import org.springframework.stereotype.Service;
