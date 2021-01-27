@@ -1,15 +1,16 @@
 package com.spacemonkeys.farmbox.services.userservice;
 
+import com.spacemonkeys.farmbox.Models.Users;
 import org.apache.catalina.User;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    User save(User user);
+    Users save(Users user);
     void delete(Long id);
-    User update(User user, Long id);
+    Optional<Users> update(Users user, Long id);
     List findAll();
-    Optional<User> findById(Long id);
+    Optional<Users> findById(Long id);
 
 }
