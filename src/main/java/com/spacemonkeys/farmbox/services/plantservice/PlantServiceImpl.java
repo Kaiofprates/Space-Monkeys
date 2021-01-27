@@ -46,7 +46,7 @@ public class PlantServiceImpl implements PlantService {
             up.setUser(plant.getUser());
             up.setCicle(plant.getCicle());
             up.setAge(plant.getAge());
-            //up.setInfo(plant.getInfo());
+            up.setInfo(plant.getInfo());
             Plant data  = repository.save(up);
             return data;
         }).get();

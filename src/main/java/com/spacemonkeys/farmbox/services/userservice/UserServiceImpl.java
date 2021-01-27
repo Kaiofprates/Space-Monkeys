@@ -3,10 +3,13 @@ package com.spacemonkeys.farmbox.services.userservice;
 import com.spacemonkeys.farmbox.Models.Users;
 import com.spacemonkeys.farmbox.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Optional;
+
+@Service
 
 public class UserServiceImpl implements UserService {
 

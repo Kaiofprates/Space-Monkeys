@@ -26,16 +26,14 @@ public class Users {
     @NotBlank
     private String password;
 
-
     @OneToMany
     @JoinColumn(name = "user_id")
     private List<Plant> plants;
 
 
-    public Users(@NotBlank String name, @NotBlank String password, List<Plant> plants) {
+    public Users(@NotBlank String name, @NotBlank String password) {
         this.name = name;
         this.password = password;
-        this.plants = plants;
         this.id = getId();
     }
 }
