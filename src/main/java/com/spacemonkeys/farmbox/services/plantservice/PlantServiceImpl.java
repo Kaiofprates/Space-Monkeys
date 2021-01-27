@@ -4,6 +4,7 @@ import com.spacemonkeys.farmbox.Models.Plant;
 import com.spacemonkeys.farmbox.repository.PlantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,16 +23,22 @@ public class PlantServiceImpl implements PlantService {
 
     @Override
     public Plant save(Plant plant) {
+        Assert.isTrue(plant.getUser() != null , "The user field cannot be null");
         return repository.save(plant);
     }
 
     @Override
     public void delete(Long id) {
+        Optional<Plant> data  = repository.findById(id);
+        Assert.isTrue(data.isPresent(),"Register not found");
         repository.deleteById(id);
     }
 
     @Override
     public Plant update(Long id, Plant plant) {
+
+        Optional<Plant> search = repository.findById(id);
+        Assert.isTrue(search.isPresent(),"Register not found");
 
         Plant updater  =  repository.findById(id)
         .map( up -> {
@@ -39,7 +46,7 @@ public class PlantServiceImpl implements PlantService {
             up.setUser(plant.getUser());
             up.setCicle(plant.getCicle());
             up.setAge(plant.getAge());
-            //up.setInfo(plant.getInfo());
+            up.setInfo(plant.getInfo());
             Plant data  = repository.save(up);
             return data;
         }).get();
