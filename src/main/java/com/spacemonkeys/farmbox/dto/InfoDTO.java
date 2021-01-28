@@ -13,6 +13,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 
 public class InfoDTO {
 
