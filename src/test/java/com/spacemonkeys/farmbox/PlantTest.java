@@ -112,7 +112,30 @@ public class PlantTest {
 
         Optional<Plant> check = plantService.findById(id);
         Assertions.assertFalse(check.isPresent());
+    }
 
+    @Test
+    public void badRequestDeleteTest() throws Exception{
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/plant/" + 100))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Register not found"))
+                .andDo(MockMvcResultHandlers.print());
+
+    }
+    @Test
+    public void badRequestCreatePlantTest() throws Exception{
+
+        Plant plant = this.plantTest();
+        plant.setUser(100L);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/plant")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content( new ObjectMapper().writeValueAsString(plant))
+        ).andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Register not found"))
+                .andDo(MockMvcResultHandlers.print());
     }
 
 

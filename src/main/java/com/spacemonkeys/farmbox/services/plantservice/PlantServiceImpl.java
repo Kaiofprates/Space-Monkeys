@@ -1,7 +1,9 @@
 package com.spacemonkeys.farmbox.services.plantservice;
 
 import com.spacemonkeys.farmbox.Models.Plant;
+import com.spacemonkeys.farmbox.Models.Users;
 import com.spacemonkeys.farmbox.repository.PlantRepository;
+import com.spacemonkeys.farmbox.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -15,15 +17,19 @@ public class PlantServiceImpl implements PlantService {
 
     @Autowired
     private final PlantRepository repository;
-
     public PlantServiceImpl(PlantRepository repository) {
         this.repository = repository;
     }
+
+    @Autowired
+    private UsersRepository usersRepository;
 
 
     @Override
     public Plant save(Plant plant) {
         Assert.isTrue(plant.getUser() != null , "The user field cannot be null");
+        Optional<Users> check =  usersRepository.findById(plant.getUser());
+        Assert.isTrue(check.isPresent(),"Register not found");
         return repository.save(plant);
     }
 

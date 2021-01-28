@@ -3,17 +3,28 @@ package com.spacemonkeys.farmbox;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spacemonkeys.farmbox.Models.Plant;
 import com.spacemonkeys.farmbox.Models.Users;
+import com.spacemonkeys.farmbox.dto.UserDto;
 import com.spacemonkeys.farmbox.repository.PlantRepository;
 import com.spacemonkeys.farmbox.repository.UsersRepository;
+import com.spacemonkeys.farmbox.services.userservice.UserService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import javax.swing.plaf.SpinnerUI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -24,39 +35,111 @@ public class UserTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private UsersRepository usersRepository;
+    private UserService userService;
 
-    @Autowired
-    private PlantRepository plantRepository;
+    public Users userTest(){
+
+        UserDto tester =  UserDto.builder()
+                .name("John Doe")
+                .password("password")
+                .build();
+
+        return tester.toUser();
+    }
+
+
 
     @Test
-    public void setUserTest() throws Exception {
+    public void createTest() throws Exception {
 
-        Users user = new Users();
-        user.setName("John Doe");
-        user.setPassword("password");
+        Users userTest = this.userTest();
 
-        Users usertest = usersRepository.save(user);
-        Long id  = usertest.getId();
+        mockMvc.perform(MockMvcRequestBuilders.post("/user")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content( new ObjectMapper().writeValueAsString(userTest))
+        ).andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect((ResultMatcher) jsonPath("$.name").value(userTest.getName()))
+                .andExpect(jsonPath("$.password").value(userTest.getPassword()))
+                .andExpect(jsonPath("$.id").isNumber())
+                .andDo(MockMvcResultHandlers.print());
 
-        Plant plant  = new Plant();
-        plant.setAge(3L);
-        plant.setUser(id);
-        plant.setCicle("Trimestral");
-        plant.setType("vegetable");
+        Assertions.assertFalse(userService.findAll().isEmpty());
+    }
 
-        Plant plantTest = plantRepository.save(plant);
+    @Test
+    public void deleteTest() throws Exception {
+        Users userTest = this.userTest();
+        Users deleter = userService.save(userTest);
+        Long id = deleter.getId();
 
-        List<Plant> plantas  = new ArrayList<Plant>();
-        plantas.add(plant);
+        mockMvc.perform(MockMvcRequestBuilders.delete("/user/" + deleter.getId()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
 
-        user.setPlants(plantas);
-        Users user2 = usersRepository.save(user);
+        Optional<Users> check = userService.findById(id);
+        Assertions.assertFalse(check.isPresent());
+    }
+
+    @Test
+    public void updateUserTest() throws  Exception{
+        Users userTest = this.userTest();
+        Users updater = userService.save(userTest);
+        userTest.setName("John Lennon");
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/user/" + updater.getId())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content( new ObjectMapper().writeValueAsString(updater))
+        ).andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$.name").value(userTest.getName()))
+                .andExpect(jsonPath("$.password").value(userTest.getPassword()))
+                .andDo(MockMvcResultHandlers.print());
+    }
 
 
-        String result = new ObjectMapper().writeValueAsString(plantTest);
-        System.out.println(result);
-        System.out.println(new ObjectMapper().writeValueAsString(user2));
+    @Test
+    public void badRequestUpdateTest() throws Exception{
+        Users userTest = this.userTest();
+        Users updater = userService.save(userTest);
+        userTest.setName("John Lennon");
 
+        mockMvc.perform(MockMvcRequestBuilders.put("/user/" + "1000")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content( new ObjectMapper().writeValueAsString(updater))
+        ).andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Register not found"))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void badRequestNameCreateTest() throws Exception{
+
+        Users userTest = this.userTest();
+        userTest.setName(null);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/user")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content( new ObjectMapper().writeValueAsString(userTest))
+        ).andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("The field name cannot be null"))
+                .andDo(MockMvcResultHandlers.print());
+
+    }
+
+    @Test
+    public void badRequestPasswordCreateTest() throws Exception {
+        Users userTest = this.userTest();
+        userTest.setPassword(null);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/user")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content( new ObjectMapper().writeValueAsString(userTest))
+        ).andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("The field password cannot be null"))
+                .andDo(MockMvcResultHandlers.print());
     }
 }

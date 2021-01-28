@@ -32,7 +32,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity save (@RequestBody @Valid UserDto dto){
         Users data = this.userService.save(dto.toUser());
-        return ResponseEntity.ok(data);
+        return ResponseEntity.status(HttpStatus.CREATED).body(data);
     }
 
     @PutMapping(value = "/{id}")

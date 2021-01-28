@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     public Users save(Users user) {
 
         Assert.isTrue(user.getName() != null, "The field name cannot be null");
-        Assert.isTrue(user.getName() != null, "The field password cannot be null");
+        Assert.isTrue(user.getPassword() != null, "The field password cannot be null");
 
         return usersRepository.save(user);
     }
