@@ -7,10 +7,10 @@ import lombok.*;
 import java.util.List;
 
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
+@Builder
 public class UserDto {
     public String name;
     public String password;

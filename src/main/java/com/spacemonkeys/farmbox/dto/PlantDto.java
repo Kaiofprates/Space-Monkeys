@@ -9,10 +9,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
+@Builder
+
 public class PlantDto {
     @NotBlank
     public String type;

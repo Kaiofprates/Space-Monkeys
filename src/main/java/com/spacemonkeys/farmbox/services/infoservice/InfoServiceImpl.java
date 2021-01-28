@@ -59,4 +59,9 @@ public class InfoServiceImpl implements InfoService {
     public List findAll() {
         return this.infoRepository.findAll();
     }
+
+    @Override
+    public Optional<Info> findById(Long id) {
+        return this.infoRepository.findById(id);
+    }
 }
