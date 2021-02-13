@@ -1,11 +1,8 @@
 package com.spacemonkeys.farmbox;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spacemonkeys.farmbox.Models.Plant;
 import com.spacemonkeys.farmbox.Models.Users;
 import com.spacemonkeys.farmbox.dto.UserDto;
-import com.spacemonkeys.farmbox.repository.PlantRepository;
-import com.spacemonkeys.farmbox.repository.UsersRepository;
 import com.spacemonkeys.farmbox.services.userservice.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,9 +16,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import javax.swing.plaf.SpinnerUI;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
