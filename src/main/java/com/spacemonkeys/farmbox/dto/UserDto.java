@@ -1,10 +1,10 @@
 package com.spacemonkeys.farmbox.dto;
 
-import com.spacemonkeys.farmbox.Models.Plant;
 import com.spacemonkeys.farmbox.Models.Users;
-import lombok.*;
-
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
